@@ -1,0 +1,177 @@
+<html>
+
+<head>
+	<script src="jquery-3.1.1.min.js"></script>
+	<script>
+	$(document).ready(function() {
+		//check for alphabet
+		$("#txtname").keydown(function(e) {
+			if((e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 97 && e.keyCode <= 122) || e.keyCode == 8 || e.keyCode == 32) {} else {
+				$("#smsg").html("<span style='color:red;'>Plese enter character only</span>").fadeIn(1000).delay(500).fadeOut(1000);
+				e.preventDefault();
+			}
+		});
+		//end here
+		//check name is null or not
+		$("#txtname").keyup(function() {
+			var name = $("#txtname").val();
+			if(name != "") {
+				$("#smsg").html("<span style='color:green;'>your name is correct</span>").fadeIn(1000).delay(500).fadeOut(1000);
+				$("#txtname").css("border", "2px solid green");
+			} else {
+				$("#smsg").html("<span style='color:red;'>your name is not correct</span>").fadeIn(1000).delay(500).fadeOut(1000);
+				$("#txtname").css("border", "2px solid red");
+			}
+		});
+		//end here validation for name
+		//validation for mobaile number
+		$("#mobno").keydown(function(e) {
+			if((e.keyCode >= 48 && e.keyCode <= 57) || e.keyCode == 8) {
+				$("#smsg").html("<span style='color:green;'>your number is correct</span>").fadeIn(1000).delay(500).fadeOut(1000);
+				$("#mobno").css("border", "2px solid green");
+			} else {
+				$("#smsg").html("<span style='color:red;'>your  number is not correct</span>").fadeIn(1000).delay(500).fadeOut(1000);
+				$("#mobno").css("border", "2px solid red");
+				e.preventDefault();
+			}
+		});
+		//check mobaile number that is start from 7,8,9
+		function checkMobNo() {
+			var mob = $("#mobno").val();
+			var status = true;
+			if(!(mob.charAt(0) == 7 || mob.charAt(0) == 8 || mob.charAt(0) == 9)) {
+				status = false;
+			}
+			return status;
+		}
+		//end method for validating of mobno
+		//test above method on keyup of mobile number textbox
+		$("#mobno").attr("maxlength", 10);
+		$("#mobno").keyup(function() {
+			var Mobile = checkMobNo();
+			if(Mobile == true) {
+				$("#smsg").html("<span style='color:green;'>your number is correct indian number</span>").fadeIn(1000).delay(500).fadeOut(1000);
+				$("#mobno").css("border", "2px solid green");
+			} else {
+				$("#smsg").html("<span style='color:red;'>your number is not correct</span>").fadeIn(1000).delay(500).fadeOut(1000);
+				$("#mobno").css("border", "2px solid red");
+			}
+			//creat a function for email validation
+		});
+
+		function getRadioValue() {
+			var r = $("input[name='gender']:checked").val();
+			alert(r);
+			if(r == "Male") {
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+		function checkEmail() {
+			var email = $("#txtemail").val();
+			var atpos = email.indexOf("@");
+			var dotpos = email.lastIndexOf(".");
+			if(atpos < 1 || dotpos < atpos + 2 || dotpos + 2 >= email.length) {
+				$("#smsg").html("<span style='color:red;'>your Email Addresh is not correct</span>").fadeIn(1000).delay(500).fadeOut(1000);
+				$("#txtemail").css("border", "2px solid red");
+			} else {
+				$("#smsg").html("<span style='color:green;'>your Email addres is correct </span>").fadeIn(1000).delay(500).fadeOut(1000);
+				$("#txtemail").css("border", "2px solid green");
+			}
+		}
+		//test above method
+		$("#txtemail").keyup(function() {
+				checkEmail();
+			})
+			//end here
+		$("#fupic").change(function() {
+			var profile = $("#fupic").val();
+			var extension = profile.substr(profile.lastIndexOf('.'));
+			if(extension == ".doc" || extension == ".docx" || extension == "pdf") {
+				$("#smsg").html("<span style='color:green;'>your profile pic is correct </span>").fadeIn(1000).delay(500).fadeOut(1000);
+				$("#fupic").css("border", "2px solid green");
+			} else {
+				$("#smsg").html("<span style='color:red;'>your profile pic is not correct</span>").fadeIn(1000).delay(500).fadeOut(1000);
+				$("#fupic").css("border", "2px solid red");
+			}
+		});
+		var v = $("#pass").attr("maxlength", 6);
+		if(v == 6) {
+			$("#smsg").html("<span style='color:green;'>your password lenth is right</span>").fadeIn(1000).delay(500).fadeOut(1000);
+			$("#pass").css("border", "2px solid green");
+		} else {
+			$("#smsg").html("<span style='color:red;'>your password length is high</span>").fadeIn(1000).delay(500).fadeOut(1000);
+			$("#pass").css("border", "2px solid red");
+		}
+	});
+	</script>
+</head>
+
+<body>
+	<h1>Validate a form By using jQuery with some textBox</h1>
+	<hr>
+	<br>
+	<br>
+	<center>
+		<table border="2" style="background:;color:black">
+			<tr>
+				<td colspan="2" style="text-align:center;font-size:20px;font-weight:bold;color:blue">Contact Form</td>
+			</tr>
+			<tr>
+				<td colspan="2"> <span id="smsg" style="font-size:18px"></span> </td>
+			</tr>
+			<tr>
+				<td>Name</td>
+				<td>
+					<input type="text" id="txtname" />
+				</td>
+			</tr>
+			<tr>
+				<td>Gender</td>
+				<td>male
+					<input type="radio" name="gender" />female
+					<input type="radio" name="gender" />
+				</td>
+			</tr>
+			<tr>
+				<td>Email</td>
+				<td>
+					<input type="text" id="txtemail" />
+				</td>
+			</tr>
+			<tr>
+				<td>Mobaile Number</td>
+				<td>
+					<input type="text" id="mobno" />
+				</td>
+			</tr>
+			<tr>
+				<td>Resume</td>
+				<td>
+					<input type="file" id="fupic" />
+				</td>
+			</tr>
+			<tr>
+				<td>Password</td>
+				<td>
+					<input type="password" id="pass" />
+				</td>
+			</tr>
+			<tr>
+				<td>Confirm Password</td>
+				<td>
+					<input type="password" id="conpass" />
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" style="text-align:center;">
+					<button onclick="">Ckick Here</button>
+				</td>
+			</tr>
+		</table>
+	</center>
+</body>
+
+</html>
